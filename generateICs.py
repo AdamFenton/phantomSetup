@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import phantomsetup
 import os
-
+"This is a test"
 cwd = os.getcwd()
 
 utime = 5.022E6 # PHANTOM code unit for time in seconds
