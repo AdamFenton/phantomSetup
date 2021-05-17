@@ -2,10 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import phantomsetup
 import os
-"This is a test"
-"this is another test of time check"
+
 cwd = os.getcwd()
-"this is a test"
+
 utime = 5.022E6 # PHANTOM code unit for time in seconds
 yr = 3.15E7 # Seconds in year
 msun = 1.989E33
@@ -14,7 +13,7 @@ AU = 1.496E13
 ##############
 # Disc setup #
 ##############
-number_of_particles = 100_000
+number_of_particles = 200_000
 norbits = 5
 
 radius_min = 1.0
