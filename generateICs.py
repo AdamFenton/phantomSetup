@@ -5,7 +5,7 @@ import os
 "This is a test"
 "this is another test of time check"
 cwd = os.getcwd()
-
+"this is a test"
 utime = 5.022E6 # PHANTOM code unit for time in seconds
 yr = 3.15E7 # Seconds in year
 msun = 1.989E33
