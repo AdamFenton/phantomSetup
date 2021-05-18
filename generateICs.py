@@ -18,9 +18,9 @@ norbits = 5
 
 radius_min = 1.0
 radius_max = 100.0
-disc_mass = 0.35
+disc_mass = 0.01
 
-alpha_art = 1.0
+alpha_art = 0.1
 beta_art = 2.0
 
 p_index = 2.05
