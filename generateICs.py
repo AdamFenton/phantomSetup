@@ -13,12 +13,12 @@ AU = 1.496E13
 ##############
 # Disc setup #
 ##############
-number_of_particles = 200_000
+number_of_particles = 20_000
 norbits = 5
 
 radius_min = 1.0
 radius_max = 100.0
-disc_mass = 0.01
+disc_mass = 0.4
 
 alpha_art = 0.1
 beta_art = 2.0
