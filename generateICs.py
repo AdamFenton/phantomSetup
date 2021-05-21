@@ -29,7 +29,7 @@ p_index = 2.05
 ###########################
 # Equation of state setup #
 ###########################
-ieos = 3
+ieos = 8
 isink=1
 q_index = 0.25
 qfacdisc = 0.5

@@ -56,8 +56,8 @@ class EquationOfState:
 
         if ieos not in ieos_label:
             raise ValueError(f'ieos={ieos} does not exist')
-        if ieos > 3:
-            raise NotImplementedError('ieos > 3 not available currently')
+        # if ieos > 3:
+        #     raise NotImplementedError('ieos > 3 not available currently')
 
         self.ieos = ieos
 
