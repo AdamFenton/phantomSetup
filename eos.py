@@ -129,8 +129,9 @@ class EquationOfState:
 
         Sound speed is proportional to radius^(-q).
         """
+
         return self.parameters['qfacdisc']
-        # print(self.parameters['qfacdisc'])
+
 
 
 

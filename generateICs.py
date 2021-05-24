@@ -29,10 +29,11 @@ p_index = 2.05
 ###########################
 # Equation of state setup #
 ###########################
-ieos = 8
+ieos = 3
 isink=1
 q_index = 0.25
-qfacdisc = 0.5
+qfacdisc = 0.25
+my_temp_exp = 0.5
 T0 = 240
 Tinf = 10
 R0 = 10
@@ -151,6 +152,7 @@ disc = phantomsetup.Disc(
     radius_range=(radius_min, radius_max),
     q_index=q_index,
     qfacdisc = qfacdisc,
+    my_temp_exp = my_temp_exp,
     p_index=p_index,
     aspect_ratio=aspect_ratio,
     reference_radius=reference_radius,

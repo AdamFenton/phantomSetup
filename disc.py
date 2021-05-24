@@ -76,6 +76,7 @@ class Disc(Particles):
         radius_range: Tuple[float, float],
         q_index: float,
         qfacdisc: float,
+        my_temp_exp:float,
         p_index: float,
         aspect_ratio: float,
         reference_radius: float,
@@ -103,6 +104,7 @@ class Disc(Particles):
             radius_range=radius_range,
             q_index=q_index,
             qfacdisc = qfacdisc,
+            my_temp_exp = my_temp_exp,
             p_index=p_index,
             aspect_ratio=aspect_ratio,
             reference_radius=reference_radius,
@@ -154,6 +156,7 @@ class Disc(Particles):
         radius_range: Tuple[float, float],
         q_index: float,
         qfacdisc:float,
+        my_temp_exp:float,
         p_index: float,
         aspect_ratio: float,
         reference_radius: float,
@@ -259,14 +262,10 @@ class Disc(Particles):
         AU = constants.au
         # R0=0.25
         stellar_mass = 1
+        ### This is where temperature is set, the actual values for it. POLYK is calculated to produce a profile to match this in phantom
+        temperature = np.sqrt(T0**2*((((r*AU)**2+(R0_temp*AU)**2)/(AU**2))**-my_temp_exp)+Tinf**2) # KELVIN
 
-        # temperature = np.sqrt(T0**2*((((r*AU)**2+(R0*AU)**2)/(AU**2))**-q_index)+Tinf**2)# KELVIN
-        temperature = np.sqrt(T0**2*((((r*AU)**2+(R0_temp*AU)**2)/(AU**2))**-qfacdisc)+Tinf**2)# KELVIN
-        #
         cs = np.sqrt((constants.k_b*temperature)/(defaults._RUN_OPTIONS['mu']*constants.m_p)) # CM/S
-        # cs_0 = 102152
-        # cs = cs_0 *(r)**-q_index
-        # temperature = (cs)**2 * (defaults._RUN_OPTIONS['mu']*constants.m_p) /constants.k_b
 
 
         omega_mine = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (r*constants.au)**3)
