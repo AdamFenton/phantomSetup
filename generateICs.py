@@ -13,7 +13,7 @@ AU = 1.496E13
 ##############
 # Disc setup #
 ##############
-number_of_particles = 20_000
+number_of_particles = 10_000
 norbits = 5
 
 radius_min = 1.0
@@ -29,7 +29,7 @@ p_index = 2.05
 ###########################
 # Equation of state setup #
 ###########################
-ieos = 3
+ieos = 8
 isink=1
 q_index = 0.25
 qfacdisc = 0.25
