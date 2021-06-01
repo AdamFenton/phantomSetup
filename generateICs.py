@@ -18,7 +18,7 @@ norbits = 5
 
 radius_min = 1.0
 radius_max = 100.0
-disc_mass = 0.4
+disc_mass = 0.2
 
 alpha_art = 0.1
 beta_art = 2.0
@@ -29,12 +29,12 @@ p_index = 2.05
 ###########################
 # Equation of state setup #
 ###########################
-ieos = 8
+ieos = 3
 isink=1
 q_index = 0.25
 qfacdisc = 0.25
 my_temp_exp = 0.5
-T0 = 240
+T0 = 220
 Tinf = 10
 R0 = 10
 R0_temp = 0.25
@@ -117,7 +117,7 @@ T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
     T0,q_index, reference_radius, stellar_mass, gravitational_constant
 )
-print(polyk)
+
 
 
 
@@ -177,25 +177,26 @@ setup.write_dump_file(directory=working_dir)
 setup.write_in_file(directory=working_dir)
 
 
+read_me_file = open('%s/disc_setup_README.txt' % cwd,'w')
 
-# print("#" * 50)
-# print("               Accretion disc setup               ")
-# print("-" * 50)
-# print('Stellar mass             = ', stellar_mass, 'solar masses')
-# print('Stellar accretion radius = ', stellar_accretion_radius, 'AU')
-# print('Disc mass                = ', disc_mass, 'solar masses')
-# print('Disc radius              = ', radius_max, 'AU')
-# print('Number of particles      = ', number_of_particles)
-# print('Number of orbits         = ', norbits)
-# print("-" * 50)
-# print(" Edit the disc.in file to change runtime options, ")
-# print("    any values not defined are set to default     ")
-# print("-" * 50)
-# print("           Set the following in disc.in           ")
-# print("-" * 50)
-# print('tmax                     = ', tmax)
-# print('dtmax                    = ', time_between_dumps)
-# print("#" * 50)
+print("#" * 50,file=read_me_file)
+print("               Accretion disc setup               ",file=read_me_file)
+print("-" * 50,file=read_me_file)
+print('Stellar mass             = ', stellar_mass, 'solar masses',file=read_me_file)
+print('Stellar accretion radius = ', stellar_accretion_radius, 'AU',file=read_me_file)
+print('Disc mass                = ', disc_mass, 'solar masses',file=read_me_file)
+print('Disc radius              = ', radius_max, 'AU',file=read_me_file)
+print('Initial temperature T0   = ', T0, 'Kelvin',file=read_me_file)
+print('Number of particles      = ', number_of_particles,file=read_me_file)
+print('Number of orbits         = ', norbits,file=read_me_file)
+print('Artifical viscosity α    = ', alpha_art,file=read_me_file)
+print("-" * 50,file=read_me_file)
+print(" Edit the disc.in file to change runtime options, ",file=read_me_file)
+print("    any values not defined are set to default     ",file=read_me_file)
+# print("-" * 50,file=read_me_file)
+# print("           Set the following in disc.in           ",file=read_me_file)
+# print("-" * 50,file=read_me_file)
+print("#" * 50,file=read_me_file)
 
 # import matplotlib.pyplot as plt
 # import numpy as np
