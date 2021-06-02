@@ -144,7 +144,7 @@ class EquationOfState:
 
 def polyk_for_locally_isothermal_disc_mine(
     T0: float,
-    q_index: float,
+    my_temp_exp: float,
     reference_radius: float,
     stellar_mass: float,
     gravitational_constant: float,
@@ -170,7 +170,8 @@ def polyk_for_locally_isothermal_disc_mine(
     omega_ref = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (reference_radius*constants.au)**3)
     aspect_ratio = (cs_ref/omega_ref)/(reference_radius*constants.au)
 
-    return ((aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** q_index) **2) # Polytropic constant, polyk
+    # return (aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** my_temp_exp) **2 # Polytropic constant, polyk
+    print(aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** my_temp_exp) **2 # Polytropic constant, polyk
 
 def polyk_for_locally_isothermal_disc(
     q_index: float,

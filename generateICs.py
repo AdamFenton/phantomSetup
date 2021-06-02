@@ -31,10 +31,12 @@ p_index = 2.05
 ###########################
 ieos = 3
 isink=1
+
 q_index = 0.25
-qfacdisc = 0.25
+qfacdisc = 0.5
 my_temp_exp = 0.5
-T0 = 220
+
+T0 = 240
 Tinf = 10
 R0 = 10
 R0_temp = 0.25
@@ -115,7 +117,7 @@ T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 #     q_index, reference_radius,aspect_ratio, stellar_mass, gravitational_constant
 # )
 polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
-    T0,q_index, reference_radius, stellar_mass, gravitational_constant
+    T0,my_temp_exp, reference_radius, stellar_mass, gravitational_constant
 )
 
 
