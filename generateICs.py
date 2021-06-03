@@ -33,14 +33,14 @@ ieos = 3
 isink=1
 
 q_index = 0.25
-qfacdisc = 0.5
+qfacdisc = 0.25
 my_temp_exp = 0.5
 
 T0 = 240
 Tinf = 10
 R0 = 10
 R0_temp = 0.25
-reference_radius = 1.0
+reference_radius = 10.0
 
 
 ##############
@@ -110,14 +110,11 @@ setup.set_compile_option('GRAVITY', True)
 setup.set_run_option('tree_accuracy', 0.3)
 setup.set_run_option('tree_accuracy', tree_accuracy)
 
-aspect_ratio = phantomsetup.eos.get_aspect_ratio(
+aspect_ratio = phantomsetup.eos.get_aspect_ratio_new(
 T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 
-# polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc(
-#     q_index, reference_radius,aspect_ratio, stellar_mass, gravitational_constant
-# )
 polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
-    T0,my_temp_exp, reference_radius, stellar_mass, gravitational_constant
+    T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio
 )
 
 
@@ -199,7 +196,7 @@ print("    any values not defined are set to default     ",file=read_me_file)
 # print("           Set the following in disc.in           ",file=read_me_file)
 # print("-" * 50,file=read_me_file)
 print("#" * 50,file=read_me_file)
-
+print('Initial conditions generated successfully. See disc_setup_README for full log')
 # import matplotlib.pyplot as plt
 # import numpy as np
 # import phantomsetup

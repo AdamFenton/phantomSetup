@@ -144,10 +144,11 @@ class EquationOfState:
 
 def polyk_for_locally_isothermal_disc_mine(
     T0: float,
-    my_temp_exp: float,
+    q_index: float,
     reference_radius: float,
     stellar_mass: float,
     gravitational_constant: float,
+    aspect_ratio: float,
 ) -> float:
     """Get polyk for a locally isothermal disc.
 
@@ -168,10 +169,9 @@ def polyk_for_locally_isothermal_disc_mine(
     cs_ref = np.sqrt((constants.k_b*T0)/(defaults._RUN_OPTIONS['mu']*constants.m_p))
 
     omega_ref = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (reference_radius*constants.au)**3)
-    aspect_ratio = (cs_ref/omega_ref)/(reference_radius*constants.au)
-
-    # return (aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** my_temp_exp) **2 # Polytropic constant, polyk
-    print(aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** my_temp_exp) **2 # Polytropic constant, polyk
+    # aspect_ratio = (cs_ref/omega_ref)/(reference_radius*constants.au)
+    
+    return (aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** q_index) **2 # Polytropic constant, polyk
 
 def polyk_for_locally_isothermal_disc(
     q_index: float,
@@ -201,15 +201,34 @@ def polyk_for_locally_isothermal_disc(
         * reference_radius ** q_index
     ) ** 2
 
-def get_aspect_ratio(
+# def get_aspect_ratio(
+#     T0: float,
+#     q_index: float,
+#     reference_radius: float,
+#     stellar_mass: float,
+#     gravitational_constant: float,
+# ) -> float:
+#
+#     cs_ref = np.sqrt((constants.k_b*T0)/(defaults._RUN_OPTIONS['mu']*constants.m_p))
+#
+#
+#     omega_ref = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (reference_radius*constants.au)**3)
+#     return(cs_ref/omega_ref)/(reference_radius*constants.au)
+
+def get_aspect_ratio_new(
     T0: float,
     q_index: float,
     reference_radius: float,
     stellar_mass: float,
     gravitational_constant: float,
 ) -> float:
+    R0_temp = 0.25
+    Tinf = 10
+    ref_radius = 10
+    my_temp_exp = 0.5
+    T_ref = np.sqrt(T0**2*(((reference_radius)**2+(R0_temp)**2)**-my_temp_exp)+Tinf**2) # KELVIN
 
-    cs_ref = np.sqrt((constants.k_b*T0)/(defaults._RUN_OPTIONS['mu']*constants.m_p))
+    cs_ref = np.sqrt((constants.k_b*T_ref)/(defaults._RUN_OPTIONS['mu']*constants.m_p))
 
 
     omega_ref = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (reference_radius*constants.au)**3)

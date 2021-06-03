@@ -240,9 +240,7 @@ class Disc(Particles):
             p = density_distribution(xi)
         p /= np.sum(p)
 
-        # r = np.random.choice(xi, size=size, p=p)
 
-        # R0=0.25
         p=p_index
 
         random_number_for_R = np.random.uniform(low=0, high=1, size=size)
@@ -257,12 +255,9 @@ class Disc(Particles):
 
 
         phi = np.random.rand(size) * 2 * np.pi
-        # T0=300
-        # Tinf=10
         AU = constants.au
-        # R0=0.25
+
         stellar_mass = 1
-        ### This is where temperature is set, the actual values for it. POLYK is calculated to produce a profile to match this in phantom
         temperature = np.sqrt(T0**2*((((r*AU)**2+(R0_temp*AU)**2)/(AU**2))**-my_temp_exp)+Tinf**2) # KELVIN
 
         cs = np.sqrt((constants.k_b*temperature)/(defaults._RUN_OPTIONS['mu']*constants.m_p)) # CM/S
@@ -274,31 +269,19 @@ class Disc(Particles):
         random_num = np.random.uniform(0, 1, size)
 
 
-        # position = np.array([r * np.cos(phi), r * np.sin(phi), z]).T
-
-        # integrated_mass = integrate.quad(
-        #     lambda x: 2 * np.pi * x * density_distribution(x, *extra_args),
-        #     radius_range[0],
-        #     radius_range[1],
-        # )[0]
-
         sigma = density_distribution(r, *extra_args) # THIS IS IN SOLAR MASS PER AU SQUARED
 
         Q_toomre =(cs * omega_mine)/(np.pi * constants.gravitational_constant * sigma * ((constants.solarm)/(constants.au**2)) ) # CGS units
 
         SGG_H = (np.sqrt(np.pi/8) * (cs/omega_mine) * (np.sqrt((1/(Q_toomre**2))+(8/np.pi)) - (1/Q_toomre))/AU)
 
-        # SGG_H = np.sqrt(np.pi/8) * (cs/omega_mine) * (np.sqrt((1/(Q_toomre**2))+(8/np.pi)) - (1/Q_toomre)) # self-gravitating scale height
 
         z = (np.sqrt(2) * SGG_H * special.erfinv((2*random_num)-1)) # THIS IS IN AU
 
         position = np.array([r * np.cos(phi), r * np.sin(phi), z]).T
         rho_0 = (sigma/np.sqrt(2*np.pi)) * (1/(SGG_H)) # THIS IS IN SOLAR MASS PER AU CUBED
-        # rho_0 = (sigma/np.sqrt(2*np.pi)) * (1/SGG_H)
 
         density = rho_0  * np.exp(-(((z)**2)/(2*((SGG_H)**2))))# THIS IS IN SOLAR MASS PER AU CUBED
-
-        # density = rho_0*np.exp(-((z**2)/(2*(SGG_H)**2))) # NSG Gaussian Density Profile
 
         smoothing_length = hfact * (particle_mass / density) ** (1 / 3)
 
