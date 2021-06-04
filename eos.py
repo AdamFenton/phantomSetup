@@ -170,7 +170,7 @@ def polyk_for_locally_isothermal_disc_mine(
 
     omega_ref = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (reference_radius*constants.au)**3)
     # aspect_ratio = (cs_ref/omega_ref)/(reference_radius*constants.au)
-    
+
     return (aspect_ratio * np.sqrt(gravitational_constant * stellar_mass / reference_radius) * reference_radius ** q_index) **2 # Polytropic constant, polyk
 
 def polyk_for_locally_isothermal_disc(

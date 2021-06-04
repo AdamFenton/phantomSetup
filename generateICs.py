@@ -113,12 +113,12 @@ setup.set_run_option('tree_accuracy', tree_accuracy)
 aspect_ratio = phantomsetup.eos.get_aspect_ratio_new(
 T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 
-polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
-    T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio
-)
+if ieos == 3:
+    polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
+        T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio)
+    print(polyk)
 
-
-
+stop
 
 setup.set_equation_of_state(ieos=ieos, polyk=polyk)
 setup.set_run_option('isink', isink)
