@@ -20,32 +20,33 @@ radius_min = 1.0
 radius_max = 100.0
 disc_mass = 0.2
 
-alpha_art = 0.1
-beta_art = 2.0
+alpha_art = 0.1 # Artifical viscosity alpha
+beta_art = 2.0  # Artifical viscosity beta (keep this as 2 to prevent interparticle penetration)
 
 p_index = 2.05
-
-
+R0 = 10
+reference_radius = 10.0
 ###########################
 # Equation of state setup #
 ###########################
 ieos = 3
 isink=1
+q_index = 0.25 # sound speed profile exponent
 
-q_index = 0.25
-qfacdisc = 0.25
-my_temp_exp = 0.5
 
+my_temp_exp = 0.5 # Temperature profile exponent. This is always double q_index
 T0 = 240
 Tinf = 10
-R0 = 10
+
+
 R0_temp = 0.25
-reference_radius = 10.0
+
 
 
 ##############
 # Sink setup #
 ##############
+qfacdisc = 0.25
 stellar_mass = 1.0
 stellar_accretion_radius = 1
 stellar_position = (0.0, 0.0, 0.0)
@@ -55,8 +56,6 @@ stellar_velocity = (0.0, 0.0, 0.0)
 
 
 
-# sigma_0 = ((((2-p_index)/(2*np.pi*(R0*AU)**2))*(disc_mass*msun))/((((R0*AU)**2+(radius_max*AU)**2)/((R0*AU)**2))**(1-(p_index/2))-(((R0*AU)**2+(radius_min*AU)**2)/((R0*AU)**2))**(1-(p_index/2))))
-# print(sigma_0)
 
 ################################################################################
 # Calculate the simualtion run time based on number of orbits and size of disc #
@@ -75,14 +74,6 @@ mass_unit = phantomsetup.units.unit_string_to_cgs('solarm')
 gravitational_constant = 1.0
 
 
-# def density_distribution(radius, radius_critical, gamma):
-#     """Self-similar disc surface density distribution.
-#
-#     This is the Lyden-Bell and Pringle (1974) solution, i.e. a power law
-#     with an exponential taper.
-#     """
-#     return phantomsetup.disc.self_similar_accretion_disc(radius, radius_critical, gamma) * sigma_crit
-#
 
 def density_distribution(radius, p_index, disc_mass,R0,radius_min,radius_max):
     """Disc surface density distribution.
@@ -90,10 +81,6 @@ def density_distribution(radius, p_index, disc_mass,R0,radius_min,radius_max):
     return phantomsetup.disc.my_surface_density(radius, p_index, disc_mass,R0,radius_min,radius_max)
 
 
-# def density_distribution(radius, p_index, reference_radius):
-#     """Disc surface density distribution.
-#     """
-#     return phantomsetup.disc.power_law(radius, p_index, reference_radius)
 
 
 
@@ -113,12 +100,10 @@ setup.set_run_option('tree_accuracy', tree_accuracy)
 aspect_ratio = phantomsetup.eos.get_aspect_ratio_new(
 T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 
-if ieos == 3:
-    polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
-        T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio)
-    print(polyk)
 
-stop
+polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
+    T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio)
+
 
 setup.set_equation_of_state(ieos=ieos, polyk=polyk)
 setup.set_run_option('isink', isink)
