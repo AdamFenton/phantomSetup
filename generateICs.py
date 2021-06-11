@@ -29,7 +29,7 @@ reference_radius = 10.0
 ###########################
 # Equation of state setup #
 ###########################
-ieos = 3
+ieos = 8
 isink=1
 q_index = 0.25 # sound speed profile exponent
 
