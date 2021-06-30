@@ -13,14 +13,14 @@ AU = 1.496E13
 ##############
 # Disc setup #
 ##############
-number_of_particles = 10_000
-norbits = 5
+number_of_particles = 1000
+norbits = 1
 
 radius_min = 1.0
 radius_max = 100.0
-disc_mass = 0.2
+disc_mass = 0.45
 
-alpha_art = 0.1 # Artifical viscosity alpha
+alpha_art = 1.0 # Artifical viscosity alpha
 beta_art = 2.0  # Artifical viscosity beta (keep this as 2 to prevent interparticle penetration)
 
 p_index = 2.05
@@ -35,7 +35,7 @@ q_index = 0.25 # sound speed profile exponent
 
 
 my_temp_exp = 0.5 # Temperature profile exponent. This is always double q_index
-T0 = 240
+T0 = 10
 Tinf = 10
 
 
@@ -100,6 +100,7 @@ setup.set_run_option('tree_accuracy', tree_accuracy)
 aspect_ratio = phantomsetup.eos.get_aspect_ratio_new(
 T0, q_index,reference_radius,stellar_mass,gravitational_constant)
 
+print(aspect_ratio)
 
 polyk = phantomsetup.eos.polyk_for_locally_isothermal_disc_mine(
     T0,q_index, reference_radius, stellar_mass, gravitational_constant,aspect_ratio)
