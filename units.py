@@ -27,5 +27,6 @@ def unit_string_to_cgs(string: str) -> float:
     # time
     if string.lower() in ('year', 'years', 'yr', 'yrs'):
         return constants.year
-
+    elif string.lower() in ('code_units'):
+        return constants.code_unit_time
     raise ValueError('Cannot convert unit')

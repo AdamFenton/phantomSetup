@@ -631,7 +631,7 @@ class Setup:
             'mass': float(mass),
             'time': float(time),
         }
-
+        
         return self
 
     def set_output(

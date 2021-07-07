@@ -80,6 +80,8 @@ class Disc(Particles):
         p_index: float,
         aspect_ratio: float,
         reference_radius: float,
+        rhocrit1: float,
+        gamma1: float,
         stellar_mass: float,
         gravitational_constant: float,
         centre_of_mass: Tuple[float, float, float] = None,
@@ -108,6 +110,8 @@ class Disc(Particles):
             p_index=p_index,
             aspect_ratio=aspect_ratio,
             reference_radius=reference_radius,
+            rhocrit1= rhocrit1,
+            gamma1 = gamma1,
             centre_of_mass=centre_of_mass,
             rotation_axis=rotation_axis,
             rotation_angle=rotation_angle,
@@ -160,6 +164,8 @@ class Disc(Particles):
         p_index: float,
         aspect_ratio: float,
         reference_radius: float,
+        rhocrit1: float,
+        gamma1: float,
         hfact: float = 1.5,
         centre_of_mass: Tuple[float, float, float] = None,
         rotation_axis: Union[Tuple[float, float, float], ndarray] = None,
@@ -255,23 +261,37 @@ class Disc(Particles):
 
         stellar_mass = 1 # HARDCODED
 
-        temperature= np.sqrt(T0**2*((((r*AU)**2+(R0_temp*AU)**2)/(AU**2))**-my_temp_exp)+Tinf**2) # KELVIN
-        cs = np.sqrt((constants.k_b*temperature)/(defaults._RUN_OPTIONS['mu']*constants.m_p)) # CM/S
-        omega_mine = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (r*constants.au)**3)
-        H = (cs/omega_mine)/AU
+        # cs = np.sqrt((constants.k_b*temperature)/(defaults._RUN_OPTIONS['mu']*constants.m_p)) # CM/S
+        # omega_mine = np.sqrt(constants.gravitational_constant * stellar_mass*constants.solarm / (r*constants.au)**3)
+        # H_old = (cs/omega_mine)/AU
+        H = (
+            reference_radius ** (q_index - 1 / 2)
+            * aspect_ratio
+            * r ** (3 / 2 - q_index)
+        )
 
         random_num = np.random.uniform(0, 1, size)
 
         sigma = density_distribution(r, *extra_args) # THIS IS IN SOLAR MASS PER AU SQUARED
 
-        Q_toomre =(cs * omega_mine)/(np.pi * constants.gravitational_constant * sigma * ((constants.solarm)/(constants.au**2)) ) # CGS units
-        SGG_H = (np.sqrt(np.pi/8) * (cs/omega_mine) * (np.sqrt((1/(Q_toomre**2))+(8/np.pi)) - (1/Q_toomre))/AU)
+        Q_toomre =(H * AU)/(np.pi * constants.gravitational_constant * sigma * ((constants.solarm)/(constants.au**2)) ) # CGS units
+
+
+        SGG_H = (np.sqrt(np.pi/8) * (H * AU) * (np.sqrt((1/(Q_toomre**2))+(8/np.pi)) - (1/Q_toomre))/AU)
 
         z = (np.sqrt(2) * SGG_H * special.erfinv((2*random_num)-1)) # THIS IS IN AU
         position = np.array([r * np.cos(phi), r * np.sin(phi), z]).T
 
         rho_0 = (sigma/np.sqrt(2*np.pi)) * (1/(SGG_H)) # THIS IS IN SOLAR MASS PER AU CUBED
         density = rho_0  * np.exp(-(((z)**2)/(2*((SGG_H)**2))))# THIS IS IN SOLAR MASS PER AU CUBED
+        rho = density * ((constants.solarm)/(constants.au)**3)
+        ponrho = np.zeros(shape=(size,))
+
+        ponrho =  0.0062513377057623895*(rho/rhocrit1)**(gamma1-1.) # THIS STILL NEEDS WORK, HOW DOES POLYK EFFECT IT ?
+        ponrho[rho < rhocrit1] = 0.0062513377057623895
+        unit_vel = constants.au/constants.code_unit_time                 # This is still sort of fudged but it works
+        temperature_coef =  constants.m_p/constants.k_b *unit_vel**2
+        temperature = temperature_coef*defaults._RUN_OPTIONS['mu']*ponrho
 
         smoothing_length = hfact * (particle_mass / density) ** (1 / 3)
 
